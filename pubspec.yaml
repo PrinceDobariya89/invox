@@ -1,0 +1,29 @@
+name: invox
+description: A fast, lightweight business application for customer management and invoicing.
+publish_to: "none"
+version: 0.1.0+1
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_riverpod: ^2.4.0
+  dio: ^5.4.0
+  go_router: ^14.0.2
+  flutter_screenutil: ^5.7.0
+  google_fonts: ^6.2.1
+  fl_chart: ^1.3.0
+  pdf: ^3.10.1
+  printing: ^5.12.0
+  excel: ^2.1.0
+  shared_preferences: ^2.2.2
+  intl: ^0.18.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
