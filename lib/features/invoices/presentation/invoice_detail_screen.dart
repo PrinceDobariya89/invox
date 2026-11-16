@@ -19,7 +19,8 @@ class InvoiceDetailScreen extends ConsumerStatefulWidget {
   const InvoiceDetailScreen({super.key, required this.invoiceId});
 
   @override
-  ConsumerState<InvoiceDetailScreen> createState() => _InvoiceDetailScreenState();
+  ConsumerState<InvoiceDetailScreen> createState() =>
+      _InvoiceDetailScreenState();
 }
 
 class _InvoiceDetailScreenState extends ConsumerState<InvoiceDetailScreen>
@@ -51,7 +52,7 @@ UPI ID: invox@hdfcbank
 Bank: HDFC Bank | A/C: 50200012345678 | IFSC: HDFC0001234
 
 Thank you for your business!
-- Invox Enterprises
+- Invox
 ''';
 
     await Printing.sharePdf(
@@ -81,7 +82,8 @@ Thank you for your business!
   @override
   Widget build(BuildContext context) {
     final invoiceAsync = ref.watch(invoiceDetailProvider(widget.invoiceId));
-    final paymentsAsync = ref.watch(paymentsByInvoiceProvider(widget.invoiceId));
+    final paymentsAsync =
+        ref.watch(paymentsByInvoiceProvider(widget.invoiceId));
     final isWide = MediaQuery.sizeOf(context).width >= 1024;
 
     return Scaffold(
@@ -96,12 +98,14 @@ Thank you for your business!
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: const Icon(Icons.share_outlined, color: AppColors.primary),
+                  icon: const Icon(Icons.share_outlined,
+                      color: AppColors.primary),
                   tooltip: 'Share WhatsApp / Email',
                   onPressed: () => _shareViaWhatsApp(invoice),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.print_outlined, color: AppColors.textPrimary),
+                  icon: const Icon(Icons.print_outlined,
+                      color: AppColors.textPrimary),
                   tooltip: 'Print Invoice',
                   onPressed: () async {
                     final bytes = await InvoicePdfBuilder.buildPdf(invoice);
@@ -126,8 +130,12 @@ Thank you for your business!
                 unselectedLabelColor: AppColors.textSecondary,
                 indicatorColor: AppColors.primary,
                 tabs: const [
-                  Tab(icon: Icon(Icons.picture_as_pdf_outlined), text: 'PDF Document'),
-                  Tab(icon: Icon(Icons.receipt_outlined), text: 'Details & Payments'),
+                  Tab(
+                      icon: Icon(Icons.picture_as_pdf_outlined),
+                      text: 'PDF Document'),
+                  Tab(
+                      icon: Icon(Icons.receipt_outlined),
+                      text: 'Details & Payments'),
                 ],
               ),
       ),
@@ -137,7 +145,8 @@ Thank you for your business!
                 if (invoice.balanceAmount <= 0) return const SizedBox.shrink();
 
                 return Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.w, vertical: 12.h),
                   color: AppColors.surface,
                   child: Row(
                     children: [
@@ -148,19 +157,24 @@ Thank you for your business!
                           Text('Balance Due', style: AppTextStyles.caption),
                           Text(
                             CurrencyFormatter.format(invoice.balanceAmount),
-                            style: AppTextStyles.h3.copyWith(color: AppColors.outstanding),
+                            style: AppTextStyles.h3
+                                .copyWith(color: AppColors.outstanding),
                           ),
                         ],
                       ),
                       const Spacer(),
                       ElevatedButton.icon(
                         onPressed: () => _openCollectPayment(invoice),
-                        icon: const Icon(Icons.payments_outlined, color: Colors.white, size: 18),
-                        label: Text('Collect Payment', style: AppTextStyles.button),
+                        icon: const Icon(Icons.payments_outlined,
+                            color: Colors.white, size: 18),
+                        label: Text('Collect Payment',
+                            style: AppTextStyles.button),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.received,
-                          padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 12.h),
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 18.w, vertical: 12.h),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.r)),
                         ),
                       ),
                     ],
@@ -198,15 +212,21 @@ Thank you for your business!
                               width: double.infinity,
                               child: ElevatedButton.icon(
                                 onPressed: () => _openCollectPayment(invoice),
-                                icon: const Icon(Icons.payments_outlined, color: Colors.white, size: 20),
+                                icon: const Icon(Icons.payments_outlined,
+                                    color: Colors.white, size: 20),
                                 label: Text(
                                   'Collect Payment (${CurrencyFormatter.format(invoice.balanceAmount)})',
-                                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600, color: Colors.white),
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white),
                                 ),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: AppColors.received,
-                                  padding: const EdgeInsets.symmetric(vertical: 14),
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 14),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12)),
                                 ),
                               ),
                             ),
@@ -285,7 +305,8 @@ Thank you for your business!
               Text('Error loading invoice: $err'),
               const SizedBox(height: 12),
               ElevatedButton(
-                onPressed: () => ref.invalidate(invoiceDetailProvider(widget.invoiceId)),
+                onPressed: () =>
+                    ref.invalidate(invoiceDetailProvider(widget.invoiceId)),
                 child: const Text('Retry'),
               ),
             ],
@@ -311,7 +332,8 @@ Thank you for your business!
             children: [
               Text(invoice.invoiceNumber, style: AppTextStyles.h2),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
                   color: invoice.status == 'PAID'
                       ? AppColors.receivedLight
@@ -336,7 +358,8 @@ Thank you for your business!
             ],
           ),
           const SizedBox(height: 6),
-          Text('Billed to: ${invoice.customerName}', style: AppTextStyles.bodyLarge),
+          Text('Billed to: ${invoice.customerName}',
+              style: AppTextStyles.bodyLarge),
           const SizedBox(height: 4),
           Text(
             'Issue Date: ${DateFormatter.toDisplay(DateTime.tryParse(invoice.date))} • Due Date: ${DateFormatter.toDisplay(DateTime.tryParse(invoice.dueDate))}',
@@ -381,7 +404,8 @@ Thank you for your business!
                   ),
                   Text(
                     CurrencyFormatter.format(item.amount),
-                    style: AppTextStyles.bodyLarge.copyWith(fontWeight: FontWeight.w700),
+                    style: AppTextStyles.bodyLarge
+                        .copyWith(fontWeight: FontWeight.w700),
                   ),
                 ],
               ),
@@ -422,7 +446,8 @@ Thank you for your business!
               if (payments.isEmpty) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(vertical: 8),
-                  child: Text('No payments recorded yet.', style: AppTextStyles.bodySmall),
+                  child: Text('No payments recorded yet.',
+                      style: AppTextStyles.bodySmall),
                 );
               }
 
@@ -430,7 +455,8 @@ Thank you for your business!
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: payments.length,
-                separatorBuilder: (_, __) => const Divider(height: 1, color: AppColors.border),
+                separatorBuilder: (_, __) =>
+                    const Divider(height: 1, color: AppColors.border),
                 itemBuilder: (context, idx) {
                   final p = payments[idx];
                   return Padding(
@@ -443,10 +469,12 @@ Thank you for your business!
                           children: [
                             Text(
                               '${p.paymentMode} • ${p.referenceNo}',
-                              style: AppTextStyles.bodyMedium.copyWith(fontWeight: FontWeight.w600),
+                              style: AppTextStyles.bodyMedium
+                                  .copyWith(fontWeight: FontWeight.w600),
                             ),
                             Text(
-                              DateFormatter.toDisplay(DateTime.tryParse(p.paymentDate)),
+                              DateFormatter.toDisplay(
+                                  DateTime.tryParse(p.paymentDate)),
                               style: AppTextStyles.caption,
                             ),
                           ],

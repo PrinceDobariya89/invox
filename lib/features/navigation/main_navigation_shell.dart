@@ -24,7 +24,7 @@ class MainNavigationShell extends ConsumerWidget {
             _DesktopSidebar(
               currentIndex: navigationShell.currentIndex,
               isExpanded: isDesktop,
-              userBusinessName: user?.businessName ?? 'Invox Enterprises',
+              userBusinessName: user?.businessName ?? 'Invox',
               userEmail: user?.email ?? 'admin@invox.com',
               onDestinationSelected: (index) {
                 navigationShell.goBranch(
@@ -37,7 +37,8 @@ class MainNavigationShell extends ConsumerWidget {
                 if (context.mounted) context.go('/login');
               },
             ),
-            const VerticalDivider(width: 1, thickness: 1, color: AppColors.border),
+            const VerticalDivider(
+                width: 1, thickness: 1, color: AppColors.border),
             Expanded(
               child: navigationShell,
             ),
@@ -71,8 +72,10 @@ class MainNavigationShell extends ConsumerWidget {
           backgroundColor: AppColors.surface,
           selectedItemColor: AppColors.primary,
           unselectedItemColor: AppColors.textSecondary,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
+          selectedLabelStyle:
+              const TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+          unselectedLabelStyle:
+              const TextStyle(fontWeight: FontWeight.w400, fontSize: 12),
           type: BottomNavigationBarType.fixed,
           elevation: 0,
           items: const [
@@ -133,8 +136,9 @@ class _DesktopSidebar extends StatelessWidget {
               vertical: 24.0,
             ),
             child: Row(
-              mainAxisAlignment:
-                  isExpanded ? MainAxisAlignment.start : MainAxisAlignment.center,
+              mainAxisAlignment: isExpanded
+                  ? MainAxisAlignment.start
+                  : MainAxisAlignment.center,
               children: [
                 Container(
                   width: 42,
@@ -303,7 +307,8 @@ class _DesktopSidebar extends StatelessWidget {
                             ),
                             Text(
                               userEmail,
-                              style: AppTextStyles.caption.copyWith(fontSize: 10),
+                              style:
+                                  AppTextStyles.caption.copyWith(fontSize: 10),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),

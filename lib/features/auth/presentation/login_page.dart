@@ -75,7 +75,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   /// Two-column hero & form split for Desktop and Web
   Widget _buildDesktopLayout(bool isLoading) {
     return ConstrainedBox(
-      constraints: const BoxConstraints(maxWidth: 920),
+      constraints: const BoxConstraints(maxWidth: 460),
       child: Card(
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -85,130 +85,32 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         color: AppColors.surface,
         clipBehavior: Clip.antiAlias,
         child: IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Left: Hero & Value Proposition Panel
-              Expanded(
-                flex: 5,
-                child: Container(
-                  padding: const EdgeInsets.all(40),
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [AppColors.primaryDark, AppColors.primary],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Text('Welcome Back',
+                      style: AppTextStyles.h2.copyWith(fontSize: 24)),
+                  const SizedBox(height: 6),
+                  Text(
+                    'Sign in to access your dashboard and ledgers',
+                    style: AppTextStyles.bodySmall,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 56,
-                            height: 56,
-                            decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.15),
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: Colors.white.withValues(alpha: 0.2),
-                              ),
-                            ),
-                            child: const Icon(
-                              Icons.receipt_long_rounded,
-                              color: Colors.white,
-                              size: 32,
-                            ),
-                          ),
-                          const SizedBox(height: 24),
-                          Text(
-                            'Invox Enterprise',
-                            style: AppTextStyles.h1.copyWith(
-                              fontSize: 28,
-                              color: Colors.white,
-                            ),
-                          ),
-                          const SizedBox(height: 8),
-                          Text(
-                            'Next-generation smart billing, collections & cashflow analytics engineered for growing businesses.',
-                            style: AppTextStyles.bodyMedium.copyWith(
-                              color: Colors.white.withValues(alpha: 0.85),
-                              height: 1.5,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-
-                      // Key Features List
-                      Column(
-                        children: [
-                          _buildFeatureRow(
-                            Icons.bolt_rounded,
-                            'Instant Invoicing',
-                            'Create GST & non-GST bills in seconds with live PDF previews',
-                          ),
-                          const SizedBox(height: 16),
-                          _buildFeatureRow(
-                            Icons.trending_up_rounded,
-                            'Cashflow Intelligence',
-                            'Real-time collection rates, monthly trends & aging reports',
-                          ),
-                          const SizedBox(height: 16),
-                          _buildFeatureRow(
-                            Icons.chat_bubble_outline_rounded,
-                            'One-Click Sharing',
-                            'Direct WhatsApp, print and email dispatch ready',
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 32),
-
-                      Text(
-                        '© 2026 Invox Systems. All rights reserved.',
-                        style: AppTextStyles.caption.copyWith(
-                          color: Colors.white.withValues(alpha: 0.6),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+                  const SizedBox(height: 28),
+                  _buildEmailField(),
+                  const SizedBox(height: 18),
+                  _buildPasswordField(),
+                  const SizedBox(height: 28),
+                  _buildSignInButton(isLoading),
+                  const SizedBox(height: 20),
+                  _buildDemoCredentialsHint(),
+                ],
               ),
-
-              // Right: Authentication Form Panel
-              Expanded(
-                flex: 5,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 48),
-                  child: Form(
-                    key: _formKey,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text('Welcome Back', style: AppTextStyles.h2.copyWith(fontSize: 24)),
-                        const SizedBox(height: 6),
-                        Text(
-                          'Sign in to access your dashboard and ledgers',
-                          style: AppTextStyles.bodySmall,
-                        ),
-                        const SizedBox(height: 28),
-                        _buildEmailField(),
-                        const SizedBox(height: 18),
-                        _buildPasswordField(),
-                        const SizedBox(height: 28),
-                        _buildSignInButton(isLoading),
-                        const SizedBox(height: 20),
-                        _buildDemoCredentialsHint(),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ),
       ),
@@ -380,7 +282,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
             filled: true,
             fillColor: AppColors.background,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
           validator: (value) {
             if (value == null || value.trim().isEmpty) {
@@ -435,7 +338,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
             filled: true,
             fillColor: AppColors.background,
-            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
           ),
           validator: (value) {
             if (value == null || value.isEmpty) {
