@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'api_endpoints.dart';
 import 'api_exception.dart';
+import 'api_log_interceptor.dart';
 import 'mock_api_interceptor.dart';
 
 class ApiClient {
@@ -9,7 +10,7 @@ class ApiClient {
 
   ApiClient({required this.dio});
 
-  static ApiClient create({bool enableMockFallback = true}) {
+  static ApiClient create({bool enableMockFallback = true, bool enableLogging = true}) {
     final dio = Dio(
       BaseOptions(
         baseUrl: ApiEndpoints.baseUrl,
@@ -40,6 +41,11 @@ class ApiClient {
         },
       ),
     );
+
+    // Formatted API Logging Interceptor (prints request/response/error details & keeps history)
+    if (enableLogging) {
+      dio.interceptors.add(ApiLogInterceptor());
+    }
 
     // Enable Mock Fallback Interceptor so Invox works seamlessly offline/standalone
     if (enableMockFallback) {

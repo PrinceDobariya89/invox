@@ -336,7 +336,7 @@ class InvoicePdfBuilder {
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: pw.CrossAxisAlignment.end,
                 children: [
-                  pw.Text('Thank you for choosing Invox!',
+                  pw.Text('Thank you for choosing Us!',
                       style: const pw.TextStyle(
                           fontSize: 9, color: PdfColors.grey500)),
                   pw.Column(

@@ -242,6 +242,10 @@ class MockApiInterceptor extends Interceptor {
     },
   ];
 
+  void _resolve(RequestInterceptorHandler handler, Response response) {
+    handler.resolve(response, true);
+  }
+
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     // Artificial slight latency for realistic network experience
@@ -253,7 +257,8 @@ class MockApiInterceptor extends Interceptor {
     // 1. Auth: POST /api/auth/login
     if (path.endsWith(ApiEndpoints.login) && method == 'POST') {
       final email = options.data['email'] ?? 'admin@invox.com';
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(
           requestOptions: options,
           statusCode: 200,
@@ -283,7 +288,8 @@ class MockApiInterceptor extends Interceptor {
                 (c['phone'] as String).toLowerCase().contains(search))
             .toList();
       }
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: result),
       );
     }
@@ -305,7 +311,8 @@ class MockApiInterceptor extends Interceptor {
       responseData['invoices'] = customerInvoices;
       responseData['payments'] = customerPayments;
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: responseData),
       );
     }
@@ -326,7 +333,8 @@ class MockApiInterceptor extends Interceptor {
         'created_at': DateTime.now().toIso8601String(),
       };
       _customers.insert(0, newCustomer);
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 201, data: newCustomer),
       );
     }
@@ -351,7 +359,8 @@ class MockApiInterceptor extends Interceptor {
                 (i['customer_name'] as String).toLowerCase().contains(search))
             .toList();
       }
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: result),
       );
     }
@@ -365,7 +374,8 @@ class MockApiInterceptor extends Interceptor {
         (i) => i['id'] == id,
         orElse: () => _invoices.first,
       );
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: invoice),
       );
     }
@@ -438,7 +448,8 @@ class MockApiInterceptor extends Interceptor {
         _customers[custIdx]['outstanding_balance'] = (_customers[custIdx]['outstanding_balance'] as double) + grandTotal;
       }
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 201, data: newInvoice),
       );
     }
@@ -496,7 +507,8 @@ class MockApiInterceptor extends Interceptor {
         _customers[custIdx]['outstanding_balance'] = currentOutstanding <= 0 ? 0.0 : currentOutstanding;
       }
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 201, data: newPayment),
       );
     }
@@ -508,7 +520,8 @@ class MockApiInterceptor extends Interceptor {
       if (invoiceId != null && invoiceId.isNotEmpty) {
         result = result.where((p) => p['invoice_id'] == invoiceId).toList();
       }
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: result),
       );
     }
@@ -535,7 +548,8 @@ class MockApiInterceptor extends Interceptor {
         }
       }
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(
           requestOptions: options,
           statusCode: 200,
@@ -566,7 +580,8 @@ class MockApiInterceptor extends Interceptor {
         'paid_invoices_count': 1,
       };
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(requestOptions: options, statusCode: 200, data: monthlyData),
       );
     }
@@ -590,7 +605,8 @@ class MockApiInterceptor extends Interceptor {
         {'month': 12, 'month_name': 'Dec', 'billed': 0.0, 'collected': 0.0, 'outstanding': 0.0},
       ];
 
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(
           requestOptions: options,
           statusCode: 200,
@@ -604,7 +620,8 @@ class MockApiInterceptor extends Interceptor {
 
     // Analytics Aging: GET /api/analytics/aging
     if (path.endsWith(ApiEndpoints.analyticsAging) && method == 'GET') {
-      return handler.resolve(
+      return _resolve(
+        handler,
         Response(
           requestOptions: options,
           statusCode: 200,
